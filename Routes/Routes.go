@@ -18,6 +18,7 @@ func SetupRouter() *gin.Engine {
 		grp1.DELETE("product/:id", Controllers.DeleteProduct)
 
 		grp1.POST("order", Controllers.CreateOrder)
+		grp1.GET("orders", Controllers.GetAllOrders)
 		grp1.GET("order/:id", Controllers.GetOrderByID)
 
 	}

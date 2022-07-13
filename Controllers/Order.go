@@ -8,21 +8,32 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//Create Product
+//GetAllorder
+func GetAllOrders(c *gin.Context) {
+	var orders []Models.Order
+	err := Models.GetAllOrders(&orders)
+	if err != nil {
+		c.AbortWithStatus(http.StatusNotFound)
+	} else {
+		c.JSON(http.StatusOK, orders)
+	}
+}
+
+//Create order
 func CreateOrder(c *gin.Context) {
 	var order Models.Order
 	c.BindJSON(&order)
+	order.Status = "order placed"
 	err := Models.CreateOrder(&order)
 	if err != nil {
 		fmt.Println(err.Error())
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
-		order.Status = "order placed"
 		c.JSON(http.StatusOK, order)
 	}
 }
 
-// getproduct by id
+// getorder by id
 func GetOrderByID(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var order Models.Order
